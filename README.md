@@ -22,6 +22,8 @@ raw complaint narratives
 -> compare Bag of Words and TF-IDF baselines
 -> tune the top 3 validation models
 -> evaluate the selected model
+-> save the classifier locally
+-> run prediction examples
 -> confusion matrix and error review
 ```
 
@@ -49,7 +51,10 @@ financial-complaint-nlp-genai-assistant/
 +-- notebooks/
 |   +-- EDA.ipynb
 |   +-- Modeling.ipynb
++-- models/
+|   +-- README.md
 +-- README.md
++-- requirements.txt
 +-- LICENSE
 +-- .gitignore
 ```
@@ -119,6 +124,8 @@ The baseline modeling notebook includes:
 - Top 3 model selection before tuning
 - Model selection using validation macro F1
 - Macro F1, weighted F1, and per-class recall
+- Saved model generation with `joblib`
+- Example predictions on new complaint text
 - Confusion matrix and error analysis
 
 Selected model:
@@ -137,6 +144,16 @@ How to interpret this:
 
 After removing exact duplicate narratives, the baseline is a more honest estimate of model performance because the same complaint text is less likely to appear in both training and test data.
 
+## Model Artifact
+
+The modeling notebook saves the selected classifier locally:
+
+```text
+models/complaint_classifier.joblib
+```
+
+The artifact is ignored by Git because it can be regenerated from the notebook and may become large.
+
 ## Requirements
 
 Main Python packages used:
@@ -149,4 +166,11 @@ seaborn
 scikit-learn
 wordcloud
 jupyter
+joblib
+```
+
+Install them with:
+
+```bash
+pip install -r requirements.txt
 ```
