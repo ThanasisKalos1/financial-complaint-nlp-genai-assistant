@@ -1,12 +1,19 @@
 # Financial Complaint NLP Classifier
 
-This project uses consumer financial complaint narratives to build an NLP classifier that predicts the financial product category of each complaint and supports complaint triage.
+This project uses consumer financial complaint narratives to build an NLP
+classifier that predicts the financial product category of each complaint and
+supports complaint triage.
 
-The current version is a classical NLP classification project. The workflow starts with exploratory data analysis of the processed complaint dataset, then compares Bag of Words and TF-IDF baselines before selecting a tuned Linear SVM model.
+The current version is a classical NLP classification project. The workflow
+starts with exploratory data analysis of the processed complaint dataset, then
+compares Bag of Words and TF-IDF baselines before selecting a tuned Linear SVM
+model.
 
 ## Business Value
 
-Financial institutions receive large volumes of customer complaints across products such as credit cards, banking, mortgages, credit reporting, and debt collection. A classifier like this can help:
+Financial institutions receive large volumes of customer complaints across
+products such as credit cards, banking, mortgages, credit reporting, and debt
+collection. A classifier like this can help:
 
 - Route complaints to the correct product or operations team
 - Reduce manual triage effort
@@ -39,7 +46,8 @@ raw complaint narratives
 
 ## Future GenAI Work
 
-This repository is currently an NLP classifier, not a GenAI assistant. A future GenAI extension could use the predicted product category to:
+This repository is currently an NLP classifier, not a GenAI assistant. A future
+GenAI extension could use the predicted product category to:
 
 - Route the complaint to a product-specific knowledge base
 - Retrieve relevant policy or compliance context
@@ -47,7 +55,8 @@ This repository is currently an NLP classifier, not a GenAI assistant. A future 
 - Suggest the correct operations or compliance team
 - Support human review rather than replacing it
 
-This future layer would be built on top of the classifier, not instead of it. It is listed as future work only.
+This future layer would be built on top of the classifier, not instead of it. It
+is listed as future work only.
 
 ## Project Status
 
@@ -86,7 +95,8 @@ financial-complaint-nlp-classifier/
 
 ## Data Setup
 
-This project uses a Kaggle dataset. Data files are not included in the repository.
+This project uses a Kaggle dataset. Data files are not included in the
+repository.
 
 Download the dataset from Kaggle and place the file in the project root:
 
@@ -108,7 +118,8 @@ The EDA notebook reads the data with:
 data_path = '../complaints_processed.csv'
 ```
 
-So run `notebooks/EDA.ipynb` from inside the `notebooks/` folder or open it normally in Jupyter from the project directory.
+So run `notebooks/EDA.ipynb` from inside the `notebooks/` folder or open it
+normally in Jupyter from the project directory.
 
 Data files are listed in `.gitignore` and should not be committed.
 
@@ -135,7 +146,8 @@ The EDA notebook includes:
 - `credit_reporting` is the largest class, creating a clear class imbalance.
 - Missing complaint narratives are minimal.
 - Bigrams are more useful than single words for separating product categories.
-- Banking-related categories share vocabulary and may need closer error analysis during modeling.
+- Banking-related categories share vocabulary and may need closer error
+  analysis during modeling.
 
 ## Modeling Summary
 
@@ -160,16 +172,24 @@ Selected model:
 - Weighted F1: 0.86
 - Error rate: 13.66%
 
-The selected model is a TF-IDF + Linear SVM classifier using unigrams, bigrams, and trigrams. It was selected because it had the best validation macro F1 among the tested baseline models.
+The selected model is a TF-IDF + Linear SVM classifier using unigrams, bigrams,
+and trigrams. It was selected because it had the best validation macro F1 among
+the tested baseline models.
 
 How to interpret this:
 
-- Macro F1 gives each class equal weight, so it is important for this imbalanced dataset.
-- Weighted F1 accounts for class size and is useful for overall model performance.
-- The gap between macro F1 and weighted F1 shows that minority classes still need attention.
-- The confusion matrix should be used to find which product categories overlap the most.
+- Macro F1 gives each class equal weight, so it is important for this imbalanced
+  dataset.
+- Weighted F1 accounts for class size and is useful for overall model
+  performance.
+- The gap between macro F1 and weighted F1 shows that minority classes still
+  need attention.
+- The confusion matrix should be used to find which product categories overlap
+  the most.
 
-After removing exact duplicate narratives, the baseline is a more honest estimate of model performance because the same complaint text is less likely to appear in both training and test data.
+After removing exact duplicate narratives, the baseline is a more honest
+estimate of model performance because the same complaint text is less likely to
+appear in both training and test data.
 
 ## Model Artifact
 
@@ -179,7 +199,8 @@ The modeling notebook saves the selected classifier locally:
 models/complaint_classifier.joblib
 ```
 
-The artifact is ignored by Git because it can be regenerated from the notebook and may become large.
+The artifact is ignored by Git because it can be regenerated from the notebook
+and may become large.
 
 ## Requirements
 
