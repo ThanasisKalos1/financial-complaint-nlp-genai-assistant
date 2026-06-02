@@ -4,6 +4,26 @@ This project uses consumer financial complaint narratives to build toward an NLP
 
 The current work focuses on exploratory data analysis of the processed complaint dataset. The EDA checks data quality, class balance, narrative length, important terms, and category overlap before moving into modeling.
 
+## How to Read This Project
+
+Start with the notebooks in this order:
+
+1. [EDA notebook](notebooks/EDA.ipynb)
+   - Understand the dataset, class imbalance, duplicate records, text length, and important terms.
+2. [Modeling notebook](notebooks/Modeling.ipynb)
+   - Train a baseline classifier using the choices motivated by the EDA.
+
+The project flow is:
+
+```text
+raw complaint narratives
+-> EDA and data quality checks
+-> remove missing and duplicate text
+-> TF-IDF text features
+-> baseline classifier
+-> evaluation and error review
+```
+
 ## Project Status
 
 Completed:
@@ -15,10 +35,11 @@ Completed:
 - TF-IDF term analysis
 - Word clouds by product category
 - Modeling recommendations
+- Baseline complaint classification model
 
 Next planned step:
 
-- Build a baseline text classifier using TF-IDF and Logistic Regression or Linear SVM.
+- Improve the baseline model with tuning and error analysis.
 
 ## Repository Structure
 
@@ -26,6 +47,7 @@ Next planned step:
 financial-complaint-nlp-genai-assistant/
 +-- notebooks/
 |   +-- EDA.ipynb
+|   +-- Modeling.ipynb
 +-- README.md
 +-- LICENSE
 +-- .gitignore
@@ -62,6 +84,7 @@ Data files are listed in `.gitignore` and should not be committed.
 ## Notebook
 
 - [EDA notebook](notebooks/EDA.ipynb)
+- [Modeling notebook](notebooks/Modeling.ipynb)
 
 The EDA notebook includes:
 
@@ -85,14 +108,31 @@ The EDA notebook includes:
 
 ## Modeling Plan
 
-The next notebook should include:
+The baseline modeling notebook includes:
 
 - Cleaning missing or empty complaint narratives
+- Removing exact duplicate narratives before splitting
 - Stratified train/test split
 - TF-IDF vectorization with unigrams and bigrams
-- Logistic Regression or Linear SVM baseline
+- Class-weighted Linear SVM baseline
 - Macro F1, weighted F1, and per-class recall
 - Confusion matrix and error analysis
+
+Baseline result:
+
+- Accuracy: 0.86
+- Macro F1: 0.84
+- Weighted F1: 0.86
+
+How to interpret this:
+
+- Accuracy shows the overall percentage of correct predictions.
+- Macro F1 gives each class equal weight, so it is important for this imbalanced dataset.
+- Weighted F1 accounts for class size and is useful for overall model performance.
+- The gap between macro F1 and weighted F1 shows that minority classes still need attention.
+- The confusion matrix should be used to find which product categories overlap the most.
+
+After removing exact duplicate narratives, the baseline is a more honest estimate of model performance because the same complaint text is less likely to appear in both training and test data.
 
 ## Requirements
 
