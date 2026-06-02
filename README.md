@@ -1,8 +1,20 @@
 # Financial Complaint NLP Assistant
 
-This project uses consumer financial complaint narratives to build toward an NLP system that can classify complaints by product category and support complaint triage.
+This project uses consumer financial complaint narratives to build an NLP classifier that predicts the financial product category of each complaint and supports complaint triage.
 
-The current work focuses on exploratory data analysis of the processed complaint dataset. The EDA checks data quality, class balance, narrative length, important terms, and category overlap before moving into modeling.
+The current version is a classical NLP classification project. It is not yet a full GenAI assistant, but it creates the classification and routing layer that a future assistant could use.
+
+The workflow starts with exploratory data analysis of the processed complaint dataset, then compares Bag of Words and TF-IDF baselines before selecting a tuned Linear SVM model.
+
+## Business Value
+
+Financial institutions receive large volumes of customer complaints across products such as credit cards, banking, mortgages, credit reporting, and debt collection. A classifier like this can help:
+
+- Route complaints to the correct product or operations team
+- Reduce manual triage effort
+- Identify recurring product or servicing issues
+- Support compliance monitoring and complaint trend analysis
+- Prioritize error review for complaint categories that are often confused
 
 ## How to Read This Project
 
@@ -38,11 +50,14 @@ Completed:
 - TF-IDF term analysis
 - Word clouds by product category
 - Modeling recommendations
-- Baseline complaint classification model
+- Bag of Words and TF-IDF baseline comparison
+- Top 3 model tuning using validation macro F1
+- Final selected complaint classification model
+- Saved model generation and prediction examples
 
 Next planned step:
 
-- Add deeper error analysis for the most confused product categories.
+- Add deeper error analysis for the most confused product-category pairs.
 
 ## Repository Structure
 
@@ -112,9 +127,9 @@ The EDA notebook includes:
 - Bigrams are more useful than single words for separating product categories.
 - Banking-related categories share vocabulary and may need closer error analysis during modeling.
 
-## Modeling Plan
+## Modeling Summary
 
-The baseline modeling notebook includes:
+The modeling notebook includes:
 
 - Cleaning missing or empty complaint narratives
 - Removing exact duplicate narratives before splitting
@@ -134,6 +149,8 @@ Selected model:
 - Macro F1: 0.85
 - Weighted F1: 0.86
 - Error rate: 13.66%
+
+The selected model is a TF-IDF + Linear SVM classifier using unigrams, bigrams, and trigrams. It was selected because it had the best validation macro F1 among the tested baseline models.
 
 How to interpret this:
 
